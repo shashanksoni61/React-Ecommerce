@@ -9,12 +9,13 @@ export default function Header() {
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
         <Navbar.Collapse id='basic-navbar-nav'>
           <Nav className='ml-auto'>
-            <Nav.Link href='/cart'>
-              <FaShoppingCart /> Cart
+            <Nav.Link href='/cart' className='nav-link-mobile-spacing'>
+              <FaShoppingCart />
+              <span>Cart</span>
             </Nav.Link>
-            <Nav.Link href='/login'>
+            <Nav.Link href='/login' className='nav-link-mobile-spacing'>
               <FaUser />
-              Sign In
+              <span>Sign In</span>
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>

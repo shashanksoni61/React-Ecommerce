@@ -24,3 +24,17 @@ a {
   text-decoration: none !important;
   color: inherit !important;
 }
+
+.rating-numbers {
+  margin-left: 0.5rem;
+  margin-top: 4px;
+}
+
+.nav-link-mobile-spacing {
+  display: flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+}
+.rating svg {
+  fill: #4a5454;
+}
