@@ -2,6 +2,7 @@ import { Fragment } from 'react';
 import { Container } from 'react-bootstrap';
 import Footer from './components/layout/Footer';
 import Header from './components/layout/Header';
+import HomePage from './components/pages/HomePage';
 
 export default function App() {
   return (
@@ -9,7 +10,7 @@ export default function App() {
       <Header />
       <main className='py-3'>
         <Container>
-          <h1>Welcome to Tech Shop</h1>
+          <HomePage />
         </Container>
       </main>
       <Footer />

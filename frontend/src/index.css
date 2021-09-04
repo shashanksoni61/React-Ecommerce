@@ -19,3 +19,8 @@ main {
 .ml-auto {
   margin-left: auto;
 }
+
+a {
+  text-decoration: none !important;
+  color: inherit !important;
+}
