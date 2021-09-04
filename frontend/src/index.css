@@ -38,3 +38,8 @@ a {
 .rating svg {
   fill: #4a5454;
 }
+
+.product-detail-sideheading {
+  font-weight: 700;
+  color: #4a5454;
+}
