@@ -4,7 +4,7 @@ import { Navbar, Nav, Container } from 'react-bootstrap';
 import { FaShoppingCart, FaUser } from 'react-icons/fa';
 export default function Header() {
   return (
-    <Navbar bg='dark' expand='lg'>
+    <Navbar bg='dark' expand='md'>
       <Container>
         <LinkContainer to='/'>
           <Navbar.Brand>TechShop</Navbar.Brand>

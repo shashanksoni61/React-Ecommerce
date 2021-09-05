@@ -28,10 +28,10 @@ export default function ProductPage() {
         Go Back
       </Link>
       <Row>
-        <Col md={6}>
+        <Col md={6} lg={6}>
           <Image src={image} alt={name} className='rounded' fluid />
         </Col>
-        <Col md={4}>
+        <Col md={6} lg={4}>
           <ListGroup variant='flush'>
             <ListGroup.Item>
               <h3> {name}</h3>
@@ -49,7 +49,7 @@ export default function ProductPage() {
             </ListGroup.Item>
           </ListGroup>
         </Col>
-        <Col md={2}>
+        <Col lg={2}>
           <Card>
             <ListGroup variend='flush'>
               <ListGroup.Item>
