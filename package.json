@@ -3,9 +3,13 @@
   "version": "1.0.0",
   "description": "Mern shopping cart",
   "main": "server.js",
+  "proxt": "http://localhost:5000",
+  "type": "module",
   "scripts": {
     "start": "node backend/server",
-    "dev": "nodemon backend/server"
+    "server": "nodemon backend/server",
+    "client": "npm start --prefix frontend",
+    "dev": "concurrently \"npm run server \" \"npm run client\""
   },
   "repository": {
     "type": "git",
@@ -18,7 +22,9 @@
   },
   "homepage": "https://github.com/shashanksoni61/React-Ecommerce#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^6.0.4"
   },
   "devDependencies": {
     "concurrently": "^6.2.1",
