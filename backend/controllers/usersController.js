@@ -68,11 +68,40 @@ const getLoggedUserProfile = AsyncHandler(async (req, res) => {
   const user = await User.findById(req.user).select('-password');
   if (!user) throw new Error('User Not Found ');
   res.json({
-    id: user._id,
+    _id: user._id,
     name: user.name,
     email: user.email,
     isAdmin: user.isAdmin,
   });
 });
 
-export { authUser, registerUser, getLoggedUserProfile };
+// desc     Update Logged user profile
+// route    PUT /api/users/profile
+// access   Private only logged user can access
+const updateUserProfile = AsyncHandler(async (req, res) => {
+  const user = await User.findById(req.user).select('-password');
+  if (!user) throw new Error('User Not Found ');
+
+  const { name, email, password } = req.body;
+
+  if (user) {
+    user.name = name || user.name;
+    user.email = email || user.email;
+
+    if (password) {
+      const salt = await bcrypt.genSalt(10);
+      user.password = (await bcrypt.hash(password, salt)) || user.password;
+    }
+
+    const updateUser = await user.save();
+
+    res.json({
+      _id: updateUser._id,
+      name: updateUser.name,
+      email: updateUser.email,
+      isAdmin: updateUser.isAdmin,
+    });
+  }
+});
+
+export { authUser, registerUser, getLoggedUserProfile, updateUserProfile };
