@@ -13,7 +13,6 @@ export default function HomePage() {
   useEffect(() => {
     dispatch(listProducts());
   }, [dispatch]);
-  console.log(products);
   return (
     <Fragment>
       <h2>Latest Products</h2>

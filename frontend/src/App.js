@@ -5,6 +5,7 @@ import Footer from './components/layout/Footer';
 import Header from './components/layout/Header';
 import HomePage from './pages/HomePage';
 import ProductPage from './pages/ProductPage';
+import CartPage from './pages/CartPage';
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
           <Switch>
             <Route path='/' component={HomePage} exact />
             <Route path='/product/:id' component={ProductPage} exact />
+            <Route path='/cart/:id?' component={CartPage} exact />
           </Switch>
         </Container>
       </main>
