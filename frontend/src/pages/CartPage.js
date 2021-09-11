@@ -37,7 +37,7 @@ export default function CartPage() {
   };
 
   const cartCheckoutHandler = () => {
-    console.log('checkout');
+    history.push('/login?redirect=shipping');
   };
   return (
     <Fragment>

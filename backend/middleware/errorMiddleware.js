@@ -1,8 +1,8 @@
 const errorHandler = (err, req, res, next) => {
   if (err.kind === 'ObjectId') {
-    return res.json({ message: 'Invalid Product Id' });
+    return res.status(401).json({ message: 'Invalid Product Id' });
   }
-  res.json({
+  res.status(401).json({
     message: err.message,
   });
 };

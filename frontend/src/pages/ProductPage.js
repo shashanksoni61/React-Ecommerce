@@ -33,9 +33,7 @@ export default function ProductPage({ history }) {
   };
 
   const {
-    brand,
     message,
-    category,
     countInStock,
     description,
     image,
@@ -55,7 +53,7 @@ export default function ProductPage({ history }) {
       {message && <Message variant='danger'>{message}</Message>}
       {!loading && !error && !message && (
         <Row>
-          <Col md={6} lg={6}>
+          <Col md={6} lg={5}>
             <Image src={image} alt={name} className='rounded' fluid />
           </Col>
           <Col md={6} lg={4}>
@@ -78,7 +76,7 @@ export default function ProductPage({ history }) {
               </ListGroup.Item>
             </ListGroup>
           </Col>
-          <Col lg={2}>
+          <Col lg={3}>
             <Card>
               <ListGroup variend='flush'>
                 <ListGroup.Item>

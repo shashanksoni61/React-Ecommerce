@@ -1,7 +1,7 @@
 import { CART_ADD_ITEM, CART_REMOVE_ITEM } from '../actions/types';
 
 const initialState = {
-  cartItems: [],
+  cartItems: JSON.parse(localStorage.getItem('cartItems')) || [],
 };
 
 export default function cartReducer(state = initialState, action) {
