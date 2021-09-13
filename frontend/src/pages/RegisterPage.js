@@ -8,9 +8,7 @@ import Message from '../components/layout/Message';
 export default function LoginPage({ history, location: { search } }) {
   const dispatch = useDispatch();
 
-  const { isAuthenticated, loading, user, error } = useSelector(
-    state => state.auth
-  );
+  const { isAuthenticated, user, error } = useSelector(state => state.auth);
 
   let warning = 'Please Re-enter Same Password';
   const [formData, setFormData] = useState({
@@ -20,12 +18,11 @@ export default function LoginPage({ history, location: { search } }) {
     password2: '',
   });
   const redirect = search ? search.split('=')[1] : '/';
-  console.log(redirect);
   useEffect(() => {
     if (isAuthenticated && user) {
       history.push(redirect);
     }
-  });
+  }, [history, redirect, isAuthenticated, user]);
 
   const { name, email, password, password2 } = formData;
 

@@ -100,6 +100,7 @@ const updateUserProfile = AsyncHandler(async (req, res) => {
       name: updateUser.name,
       email: updateUser.email,
       isAdmin: updateUser.isAdmin,
+      token: getToken(user._id),
     });
   }
 });

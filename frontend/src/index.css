@@ -47,6 +47,13 @@ a {
 .dropdown-item:hover {
   background-color: var(--bs-secondary) !important;
 }
+.dropdown-item.active,
 .dropdown-item:active {
+  color: #fff;
+  text-decoration: none;
   background-color: var(--bs-secondary) !important;
+}
+
+.form-control {
+  background-color: #f1f1f1 !important;
 }

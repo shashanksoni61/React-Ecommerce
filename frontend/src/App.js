@@ -8,6 +8,9 @@ import ProductPage from './pages/ProductPage';
 import CartPage from './pages/CartPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import ProfilePage from './pages/ProfilePage';
+import ShippingPage from './pages/ShippingPage';
+import PaymentPage from './pages/PaymentPage';
 
 export default function App() {
   return (
@@ -21,6 +24,9 @@ export default function App() {
             <Route path='/cart/:id?' component={CartPage} exact />
             <Route path='/login' component={LoginPage} exact />
             <Route path='/register' component={RegisterPage} exact />
+            <Route path='/profile' component={ProfilePage} exact />
+            <Route path='/shipping' component={ShippingPage} exact />
+            <Route path='/payment' component={PaymentPage} exact />
           </Switch>
         </Container>
       </main>

@@ -7,9 +7,7 @@ import Message from '../components/layout/Message';
 
 export default function LoginPage({ history, location: { search } }) {
   const dispatch = useDispatch();
-  const { isAuthenticated, loading, user, error } = useSelector(
-    state => state.auth
-  );
+  const { isAuthenticated, user, error } = useSelector(state => state.auth);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
