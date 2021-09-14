@@ -14,7 +14,7 @@ export default function ShippingPage({ history }) {
     address: shippingAddress.address || '',
     pin: shippingAddress.pin || '',
     city: shippingAddress.city || '',
-    state: shippingAddress.state || '',
+    country: shippingAddress.country || '',
   });
 
   useEffect(() => {
@@ -23,7 +23,7 @@ export default function ShippingPage({ history }) {
     }
   }, [history, isAuthenticated]);
 
-  const { address, pin, city, state } = formData;
+  const { address, pin, city, country } = formData;
 
   const formInputHandler = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -31,7 +31,7 @@ export default function ShippingPage({ history }) {
 
   const formSubmitHandler = e => {
     e.preventDefault();
-    if (address && pin && city && state) {
+    if (address && pin && city && country) {
       dispatch(saveShippingAddress(formData));
       history.push('/payment');
     }
@@ -76,13 +76,13 @@ export default function ShippingPage({ history }) {
                 required
               ></Form.Control>
             </Form.Group>
-            <Form.Group controlId='state'>
-              <Form.Label>State</Form.Label>
+            <Form.Group controlId='country'>
+              <Form.Label>Country</Form.Label>
               <Form.Control
-                name='state'
+                name='country'
                 type='text'
-                placeholder='Enter State'
-                value={state}
+                placeholder='Country'
+                value={country}
                 onChange={e => formInputHandler(e)}
                 required
               ></Form.Control>

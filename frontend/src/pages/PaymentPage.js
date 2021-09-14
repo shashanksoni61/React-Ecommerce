@@ -32,7 +32,7 @@ export default function ShippingPage({ history }) {
     if (paymentMethod) {
       console.log(paymentMethod);
       dispatch(savePaymentMethod(paymentMethod));
-      history.push('/place-order');
+      history.push('/placeorder');
     }
   };
   return (

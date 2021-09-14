@@ -57,10 +57,55 @@ export default function CartPage() {
             <ListGroup variant='flush'>
               {cartItems.map(item => (
                 <ListGroup.Item key={item.product}>
-                  <Row className='justify-content-between align-items-center'>
+                  <Row className='justify-content-between align-items-center d-md-none'>
+                    <Col xs={3} sm={2} md={2}>
+                      <Image src={item.image} alt={item.name} fluid rounded />
+                    </Col>
+                    <Col xs={5}>
+                      <Row>
+                        <Col>
+                          <Link to={`/product/${item.product}`}>
+                            {item.name}
+                          </Link>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col>${item.price}</Col>
+                      </Row>
+                    </Col>
+                    <Col xs={2} className='text-center'>
+                      <Form.Control
+                        as='select'
+                        value={item.qty}
+                        onChange={e =>
+                          dispatch(
+                            addToCart(item.product, Number(e.target.value))
+                          )
+                        }
+                      >
+                        {[...Array(item.countInStock).keys()].map((x, i) => (
+                          <option key={x + 1} value={x + 1}>
+                            {' '}
+                            {x + 1}
+                          </option>
+                        ))}
+                      </Form.Control>
+                      <Button
+                        className='mt-2'
+                        type='button'
+                        variant='light'
+                        onClick={() => removeItemFromCartHandler(item.product)}
+                      >
+                        <FaTrash className='text-primary' />
+                      </Button>
+                    </Col>
+                  </Row>
+
+                  <Row className='justify-content-between align-items-center d-none d-md-flex'>
                     <Col xs={2} sm={2} md={2}>
                       <Image src={item.image} alt={item.name} fluid rounded />
                     </Col>
+
                     <Col xs={4} sm={4} md={3}>
                       <Link to={`/product/${item.product}`}>{item.name}</Link>
                     </Col>

@@ -57,3 +57,7 @@ a {
 .form-control {
   background-color: #f1f1f1 !important;
 }
+
+.btn-block {
+  width: 100%;
+}

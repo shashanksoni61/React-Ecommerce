@@ -11,6 +11,8 @@ import RegisterPage from './pages/RegisterPage';
 import ProfilePage from './pages/ProfilePage';
 import ShippingPage from './pages/ShippingPage';
 import PaymentPage from './pages/PaymentPage';
+import PlaceOrderPage from './pages/PlaceOrderPage';
+import OrderDetailsPage from './pages/OrderDetailsPage';
 
 export default function App() {
   return (
@@ -27,6 +29,8 @@ export default function App() {
             <Route path='/profile' component={ProfilePage} exact />
             <Route path='/shipping' component={ShippingPage} exact />
             <Route path='/payment' component={PaymentPage} exact />
+            <Route path='/placeorder' component={PlaceOrderPage} exact />
+            <Route path='/orders/:id' component={OrderDetailsPage} exact />
           </Switch>
         </Container>
       </main>
