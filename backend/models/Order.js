@@ -21,6 +21,7 @@ const OrderSchema = mongoose.Schema(
       },
     ],
     shippingAddress: {
+      mobile: { type: String, required: true },
       address: { type: String, required: true },
       city: { type: String, required: true },
       pin: { type: Number, required: true },
@@ -31,10 +32,16 @@ const OrderSchema = mongoose.Schema(
       required: true,
     },
     paymentResult: {
-      id: { type: String },
+      paymentId: { type: String },
+      razorpayOrderId: { type: String },
       status: { type: String },
-      update_time: { type: String },
-      email_address: { type: String },
+      email: { type: String },
+      create_time: { type: Date },
+    },
+    itemsPrice: {
+      type: Number,
+      required: true,
+      default: 0.0,
     },
     taxPrice: {
       type: Number,

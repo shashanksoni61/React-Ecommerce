@@ -1,8 +1,8 @@
+import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { FaTimesCircle } from 'react-icons/fa';
 import {
   Container,
   Row,
@@ -12,25 +12,86 @@ import {
   ListGroup,
   Image,
 } from 'react-bootstrap';
+import Moment from 'react-moment';
+
 import Message from '../components/layout/Message';
 import Spinner from '../components/layout/Spinner';
-import { getOrderByID } from '../actions/orderAction';
+
+import { getOrderByID, payOrder } from '../actions/orderAction';
+import { CLEAR_CART_STATE, ORDER_PAY_RESET } from '../actions/types';
+import { loadScript } from '../utils';
 
 export default function OrderDetailsPage() {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { isAuthenticated } = useSelector(state => state.auth);
-  const { loading, order, error, success } = useSelector(state => state.order);
+  const { user } = useSelector(state => state.auth);
+  const { loading, order, error } = useSelector(state => state.order);
+  const { success: successPaid, error: errorPaid } = useSelector(
+    state => state.orderPaid
+  );
 
   useEffect(() => {
-    dispatch(getOrderByID(id));
-  }, []);
+    loadScript('https://checkout.razorpay.com/v1/checkout.js');
 
-  order.itemsPrice = order.orderItems
-    .reduce((acc, item) => acc + item.qty * item.price, 0)
-    .toFixed(2);
+    if (!order || successPaid) {
+      dispatch({ type: ORDER_PAY_RESET });
+      dispatch({ type: CLEAR_CART_STATE });
+      dispatch(getOrderByID(id));
+    }
+  }, [dispatch, id, order, successPaid]);
 
-  const placeOrderHandler = () => {};
+  const displayRazorPay = async () => {
+    const { data: RAZORPAY_KEY_ID } = await axios.get('/api/config/razorpay');
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        'x-auth-token': `${user.token}`,
+      },
+    };
+
+    const { data: orderPayData } = await axios.get(
+      `/api/orders/${id}/razorpay`,
+      config
+    );
+
+    const options = {
+      key: RAZORPAY_KEY_ID,
+      currency: orderPayData.currency,
+      amount: orderPayData.amount.toString(),
+      order_id: orderPayData.id,
+      name: 'Donation',
+      description: 'Tesing',
+      image: '/logo192.png',
+      handler: async function (response) {
+        const paymentResult = {
+          orderCreationId: orderPayData.id,
+          razorpayPaymentId: response.razorpay_payment_id,
+          razorpayOrderId: response.razorpay_order_id,
+          razorpaySignature: response.razorpay_signature,
+        };
+
+        const result = await axios.post(
+          `/api/orders/${id}/payment_varify`,
+          paymentResult,
+          config
+        );
+
+        if (result.status === 200) {
+          dispatch(payOrder(id, result.data));
+        }
+      },
+      prefill: {
+        name: user.name,
+        email: user.email,
+        phone_number: '9899999999',
+      },
+    };
+
+    const paymentObject = new window.Razorpay(options);
+    paymentObject.open();
+  };
+
   return (
     <Container>
       {loading && <Spinner />}
@@ -45,8 +106,10 @@ export default function OrderDetailsPage() {
                 <p>
                   <strong>Name : </strong>
                   {order.user.name}
-                </p>
-                <p>
+                  <br />
+                  <strong>Mobile No : </strong>
+                  {order.shippingAddress.mobile}
+                  <br />
                   <strong>Address : </strong>
                   {order.shippingAddress.address},{order.shippingAddress.city},
                   {order.shippingAddress.pin},{order.shippingAddress.country}
@@ -66,7 +129,12 @@ export default function OrderDetailsPage() {
                   {order.paymentMethod}
                 </p>
                 {order.isPaid ? (
-                  <Message variant='success'>Paid at {order.paidAt}</Message>
+                  <Message variant='success'>
+                    Paid on{' '}
+                    <Moment format='ddd, MMMM Do YYYY, h:mm A'>
+                      {order.paidAt}
+                    </Moment>
+                  </Message>
                 ) : (
                   <Message variant='danger'>Not Paid</Message>
                 )}
@@ -153,6 +221,17 @@ export default function OrderDetailsPage() {
                     <Col>$ {order.totalPrice}</Col>
                   </Row>
                 </ListGroup.Item>
+                {!order.isPaid && (
+                  <ListGroup.Item>
+                    <Button
+                      type='button'
+                      className='btn btn-block'
+                      onClick={displayRazorPay}
+                    >
+                      Pay Now
+                    </Button>
+                  </ListGroup.Item>
+                )}
               </ListGroup>
             </Card>
           </Col>

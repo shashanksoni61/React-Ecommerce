@@ -11,6 +11,7 @@ export default function ShippingPage({ history }) {
   const { shippingAddress } = useSelector(state => state.cart);
 
   const [formData, setFormData] = useState({
+    mobile: shippingAddress.mobile || '',
     address: shippingAddress.address || '',
     pin: shippingAddress.pin || '',
     city: shippingAddress.city || '',
@@ -23,7 +24,7 @@ export default function ShippingPage({ history }) {
     }
   }, [history, isAuthenticated]);
 
-  const { address, pin, city, country } = formData;
+  const { mobile, address, pin, city, country } = formData;
 
   const formInputHandler = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -43,6 +44,17 @@ export default function ShippingPage({ history }) {
           <CheckoutSteps step1 step2 />
           <h1>Shipping</h1>
           <Form onSubmit={formSubmitHandler}>
+            <Form.Group controlId='mobile'>
+              <Form.Label>Mobile No.</Form.Label>
+              <Form.Control
+                name='mobile'
+                type='text'
+                placeholder='Enter Mobile Number'
+                value={mobile}
+                onChange={e => formInputHandler(e)}
+                required
+              ></Form.Control>
+            </Form.Group>
             <Form.Group controlId='address'>
               <Form.Label>Address</Form.Label>
               <Form.Control

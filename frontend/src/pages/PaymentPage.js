@@ -13,7 +13,9 @@ export default function ShippingPage({ history }) {
     state => state.cart
   );
 
-  const [paymentMethod, setPaymentMethod] = useState(payMeth || 'PayPal');
+  const [paymentMethod, setPaymentMethod] = useState(
+    payMeth || 'Online-Payment'
+  );
 
   useEffect(() => {
     console.log(paymentMethod);
@@ -47,11 +49,11 @@ export default function ShippingPage({ history }) {
               <Form.Check
                 id='paypal'
                 type='radio'
-                label='Paypal or Debit Card'
-                value='PayPal'
-                checked={paymentMethod === 'PayPal'}
+                label='Pay Online Card/UPI'
+                value='pay-online'
+                checked={paymentMethod === 'Online-Payment'}
                 name='paymentMethod'
-                onChange={() => setPaymentMethod('PayPal')}
+                onChange={() => setPaymentMethod('Online-Payment')}
               />
               <Form.Check
                 id='CoD'

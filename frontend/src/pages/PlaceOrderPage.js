@@ -22,14 +22,13 @@ export default function ShippingPage({ history }) {
   const {
     cartItems,
     paymentMethod,
-    shippingAddress: { address, pin, city, country },
+    shippingAddress: { mobile, address, pin, city, country },
   } = cart;
   const { order, error, success } = useSelector(state => state.order);
 
-  cart.itemsPrice = cartItems.reduce(
-    (acc, item) => acc + item.qty * item.price,
-    0
-  );
+  cart.itemsPrice = Number(
+    cartItems.reduce((acc, item) => acc + item.qty * item.price, 0)
+  ).toFixed(2);
 
   cart.shippingPrice = Number(cart.itemsPrice > 500 ? 0 : 50).toFixed(2);
   cart.taxPrice = Number(
@@ -71,6 +70,10 @@ export default function ShippingPage({ history }) {
           <ListGroup variant='flush'>
             <ListGroup.Item>
               <h4>Shipping</h4>
+              <p>
+                <strong>Mobile No. : </strong>
+                {mobile}
+              </p>
               <p>
                 <strong>Address : </strong>
                 {address + ',' + city + ',' + pin + ',' + country}

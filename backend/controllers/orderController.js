@@ -1,10 +1,20 @@
 import AsyncHandler from 'express-async-handler';
 import Order from '../models/Order.js';
+import Razorpay from 'razorpay';
+import crypto from 'crypto';
+import shortid from 'shortid';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const razorpay = new Razorpay({
+  key_id: process.env.RAZORPAY_KEY_ID,
+  key_secret: process.env.RAZORPAY_KEY_SECRET,
+});
 
 // Desc     Create New Order
 // Route    POST /api/orders/
 // Access   Private Only Logged User can visit
-
 export const addOrder = AsyncHandler(async (req, res) => {
   const {
     orderItems,
@@ -53,4 +63,98 @@ export const getOrderByID = AsyncHandler(async (req, res) => {
     throw new Error('Order Not Found');
   }
   res.status(200).json(order);
+});
+
+// Desc     Generate Razorpay order id with amount for payment
+// Route    POST /api/orders/:id/pay
+// Access   Private Only For Logged User
+
+export const generateRazorpayOrderId = AsyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id);
+
+  if (order) {
+    const payment_capture = 1;
+    const amount = order.totalPrice;
+    const currency = 'INR';
+
+    const options = {
+      amount: amount * 100,
+      currency,
+      receipt: shortid.generate(),
+      payment_capture,
+    };
+
+    const response = await razorpay.orders.create(options);
+    res.json({
+      id: response.id,
+      currency: response.currency,
+      amount: response.amount,
+    });
+  } else {
+    res.status(404);
+    throw new Error('Order Not Found');
+  }
+});
+
+// Desc     Validate Payment Status using Razorpay secret
+// Route    POST /:id/payment_varify
+// Access   Private Only For Logged User
+export const validatePayment = AsyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id);
+  if (order) {
+    const {
+      orderCreationId,
+      razorpayPaymentId,
+      razorpayOrderId,
+      razorpaySignature,
+    } = req.body;
+
+    const shasum = crypto.createHmac('sha256', process.env.RAZORPAY_KEY_SECRET);
+
+    shasum.update(`${orderCreationId}|${razorpayPaymentId}`);
+
+    const digest = shasum.digest('hex');
+
+    if (digest !== razorpaySignature) {
+      return res
+        .status(400)
+        .json({ message: 'Transaction Varification Failed' });
+    }
+
+    res.json({
+      status: 'Paid',
+      orderId: razorpayOrderId,
+      paymentId: razorpayPaymentId,
+      razorpayOrderId,
+      create_time: new Date(),
+    });
+  } else {
+    res.status(404);
+    throw new Error('Order Not Found');
+  }
+});
+
+// Desc     Update Order to paid
+// Route    GET /api/orders/:id/pay
+// Access   Private Only For Logged User
+export const updateOrderToPaid = AsyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id);
+
+  if (order) {
+    order.isPaid = true;
+    order.paidAt = new Date();
+    order.paymentResult = {
+      paymentId: req.body.paymentId,
+      razorpayOrderId: req.body.razorpayOrderId,
+      status: req.body.status,
+      email: req.body.email,
+      create_time: req.body.create_time,
+    };
+
+    const updateOrder = await order.save();
+    res.json(updateOrder);
+  } else {
+    res.status(404);
+    throw new Error('Order Not Found');
+  }
 });

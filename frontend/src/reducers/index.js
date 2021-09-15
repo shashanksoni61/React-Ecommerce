@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import productReducer from './productReducer';
 import cartReducer from './cartReducer';
 import authReducer from './authReducer';
-import orderReducer from './orderReducer';
+import { orderReducer, orderPaidReducer } from './orderReducer';
 // import userProfileReducer from './userProfileReducer';
 
 export default combineReducers({
@@ -10,5 +10,6 @@ export default combineReducers({
   cart: cartReducer,
   auth: authReducer,
   order: orderReducer,
+  orderPaid: orderPaidReducer,
   // userProfile: userProfileReducer,
 });

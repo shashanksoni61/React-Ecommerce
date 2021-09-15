@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {
+  CLEAR_CART_STATE,
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
@@ -72,6 +73,8 @@ export const register = (name, email, password) => async dispatch => {
 
 export const logout = () => dispatch => {
   console.log('logout action working');
+  console.log('Clearing All States before logout');
+  dispatch({ type: CLEAR_CART_STATE });
   dispatch({ type: USER_LOGOUT });
 };
 
