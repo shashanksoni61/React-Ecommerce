@@ -115,10 +115,26 @@ const getAllUsers = AsyncHandler(async (req, res) => {
   res.json(users);
 });
 
+// desc     Delete a User
+// route    Delete /api/users/:id
+// access   Private only Admin can access
+const deleteUser = AsyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+
+  if (!user) {
+    res.status(404);
+    throw new Error('User not found');
+  }
+
+  await user.remove();
+  res.json({ message: 'User removed' });
+});
+
 export {
   authUser,
   registerUser,
   getLoggedUserProfile,
   updateUserProfile,
   getAllUsers,
+  deleteUser,
 };

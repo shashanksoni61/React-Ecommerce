@@ -7,22 +7,28 @@ import { FaCheck, FaEdit, FaTimes, FaTrash } from 'react-icons/fa';
 import Message from '../components/layout/Message';
 import Spinner from '../components/layout/Spinner';
 
-import { getAllUsers } from '../actions/userListAction';
+import { deleteUser, getAllUsers } from '../actions/userListAction';
 
 export default function UserListPage({ history }) {
   const dispatch = useDispatch();
 
   const { loading, users, error } = useSelector(state => state.userList);
   const { user } = useSelector(state => state.auth);
+  const { success: userDeleteSuccess } = useSelector(state => state.userDelete);
+
   useEffect(() => {
     if (user && user.isAdmin) {
       dispatch(getAllUsers());
     } else {
       history.push('/login');
     }
-  }, [dispatch, history, user]);
+  }, [dispatch, history, user, userDeleteSuccess]);
 
-  const deleteUserHandler = userId => {};
+  const deleteUserHandler = userId => {
+    if (window.confirm('Are you sure')) {
+      dispatch(deleteUser(userId));
+    }
+  };
   return (
     <Fragment>
       <h2>Users</h2>
