@@ -35,8 +35,8 @@ export default function OrderDetailsPage() {
 
     if (!order || successPaid) {
       dispatch({ type: ORDER_PAY_RESET });
-      dispatch({ type: CLEAR_CART_STATE });
       dispatch(getOrderByID(id));
+      dispatch({ type: CLEAR_CART_STATE });
     }
   }, [dispatch, id, order, successPaid]);
 
@@ -60,8 +60,8 @@ export default function OrderDetailsPage() {
       currency: orderPayData.currency,
       amount: orderPayData.amount.toString(),
       order_id: orderPayData.id,
-      name: 'Donation',
-      description: 'Tesing',
+      name: 'Tech Shop',
+      description: `At Your Service`,
       image: '/logo192.png',
       handler: async function (response) {
         const paymentResult = {
@@ -141,7 +141,7 @@ export default function OrderDetailsPage() {
               </ListGroup.Item>
 
               <ListGroup.Item>
-                <h4>Cart Items</h4>
+                <h4>Order Items</h4>
                 {order.orderItems.length === 0 ? (
                   <Message variant='info'>Your Cart Is Empty</Message>
                 ) : (

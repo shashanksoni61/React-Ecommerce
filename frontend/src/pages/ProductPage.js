@@ -16,10 +16,11 @@ import Rating from '../components/product/Rating';
 import Spinner from '../components/layout/Spinner';
 import Message from '../components/layout/Message';
 import { productDetails } from '../actions/productAction';
+import { addToCart } from '../actions/cartAction';
 
 export default function ProductPage({ history }) {
   const [quantity, setQuantity] = useState(1);
-
+  const [itemAdded, setItemAdded] = useState(false);
   const { id } = useParams();
   const dispatch = useDispatch();
   const { loading, error, product } = useSelector(state => state.products);
@@ -28,8 +29,10 @@ export default function ProductPage({ history }) {
   }, [dispatch, id]);
 
   const addToCartHandler = () => {
-    console.log('add to cart button clicked ');
-    history.push(`/cart/${id}?qty=${quantity}`);
+    // history.push(`/cart/${id}?qty=${quantity}`);
+    dispatch(addToCart(id, Number(quantity)));
+    setItemAdded(true);
+    setTimeout(() => setItemAdded(false), 2000);
   };
 
   const {
@@ -122,6 +125,11 @@ export default function ProductPage({ history }) {
                     Add To Cart
                   </Button>
                 </ListGroup.Item>
+                {itemAdded && (
+                  <ListGroup.Item>
+                    <Message variant='success'>Item Added</Message>
+                  </ListGroup.Item>
+                )}
               </ListGroup>
             </Card>
           </Col>

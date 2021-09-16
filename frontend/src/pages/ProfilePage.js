@@ -1,9 +1,13 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { Container, Row, Col, Form, Button, Table } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import Moment from 'react-moment';
+import { FaTimesCircle } from 'react-icons/fa';
 import Message from '../components/layout/Message';
 import Spinner from '../components/layout/Spinner';
 import { updateUserProfile } from '../actions/authAction';
+import { getUserOrders } from '../actions/userOrdersAction';
 
 export default function ProfilePage({ history }) {
   const dispatch = useDispatch();
@@ -11,6 +15,12 @@ export default function ProfilePage({ history }) {
   const { isAuthenticated, loading, user, error } = useSelector(
     state => state.auth
   );
+
+  const {
+    loading: userOrdersLoading,
+    orders,
+    errors: userOrdersErrors,
+  } = useSelector(state => state.userOrders);
 
   let warning = 'Please Re-enter Same Password';
 
@@ -24,8 +34,12 @@ export default function ProfilePage({ history }) {
   useEffect(() => {
     if (!isAuthenticated) {
       history.push('/login');
+    } else {
+      if (!orders) {
+        dispatch(getUserOrders());
+      }
     }
-  }, [isAuthenticated, history]);
+  }, [isAuthenticated, history, orders]);
 
   const { name, email, password, password2 } = formData;
 
@@ -36,7 +50,6 @@ export default function ProfilePage({ history }) {
   const formSubmitHandler = e => {
     e.preventDefault();
     if (name && email && password && password2 && password === password2) {
-      // dispatch(register(name, email, password));
       dispatch(updateUserProfile(name, email, password));
       console.log(formData);
     }
@@ -105,8 +118,63 @@ export default function ProfilePage({ history }) {
                 </Button>
               </Form>
             </Col>
-            <Col md={9}>
+            <Col md={9} className='mt-sm-2 mt-md-0'>
               <h2>Your Orders</h2>
+              {userOrdersLoading && <Spinner />}
+              {userOrdersErrors && (
+                <Message variant='danger'>{userOrdersErrors}</Message>
+              )}
+              {!userOrdersLoading && !userOrdersErrors && (
+                <Table
+                  striped
+                  bordered
+                  hover
+                  responsive
+                  className='table-sm text-center'
+                >
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>DATE</th>
+                      <th>TOTAL</th>
+                      <th>PAID</th>
+                      <th>DELIVERED</th>
+                      <th>DETAILS</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {orders &&
+                      orders.map(order => (
+                        <tr key={order._id}>
+                          <td>{order._id.substring(0, 5)}....</td>
+                          <td>
+                            <Moment>{order.createdAt}</Moment>
+                          </td>
+                          <td>$ {order.totalPrice}</td>
+                          <td>
+                            {order.isPaid ? (
+                              <Moment>{order.paidAt}</Moment>
+                            ) : (
+                              <FaTimesCircle style={{ color: 'red' }} />
+                            )}
+                          </td>
+                          <td>
+                            {order.isDelivered ? (
+                              <Moment>{order.deliveredAt}</Moment>
+                            ) : (
+                              <FaTimesCircle style={{ color: 'red' }} />
+                            )}
+                          </td>
+                          <td>
+                            <Link to={`/orders/${order._id}`}>
+                              <Button className='btn-sm'>Details</Button>
+                            </Link>
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </Table>
+              )}
             </Col>
           </Fragment>
         )}

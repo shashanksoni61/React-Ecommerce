@@ -1,5 +1,6 @@
 import AsyncHandler from 'express-async-handler';
 import Order from '../models/Order.js';
+import User from '../models/User.js';
 import Razorpay from 'razorpay';
 import crypto from 'crypto';
 import shortid from 'shortid';
@@ -53,6 +54,7 @@ export const addOrder = AsyncHandler(async (req, res) => {
 // Access   Private Only For Logged User
 
 export const getOrderByID = AsyncHandler(async (req, res) => {
+  const user = await User.findById(req.user);
   const order = await Order.findById(req.params.id).populate(
     'user',
     'id name email'
@@ -61,8 +63,18 @@ export const getOrderByID = AsyncHandler(async (req, res) => {
   if (!order) {
     res.status(404);
     throw new Error('Order Not Found');
+  } else {
+    const loggedUserId = String(user._id);
+    const orderUserId = String(order.user._id);
+    console.log(loggedUserId);
+    console.log(orderUserId);
+    if (loggedUserId !== orderUserId) {
+      res.status(401);
+      throw new Error('Unauthorized Access');
+    } else {
+      res.status(200).json(order);
+    }
   }
-  res.status(200).json(order);
 });
 
 // Desc     Generate Razorpay order id with amount for payment
@@ -156,5 +168,19 @@ export const updateOrderToPaid = AsyncHandler(async (req, res) => {
   } else {
     res.status(404);
     throw new Error('Order Not Found');
+  }
+});
+
+// Desc     Get Orders of Logged User
+// Route    GET /api/orders/myorders
+// Access   Private Only For Logged User
+export const getUserOrders = AsyncHandler(async (req, res) => {
+  const orders = await Order.find({ user: req.user });
+
+  if (orders) {
+    res.status(200).json(orders);
+  } else {
+    res.status(404);
+    throw new Error('No Orders Found');
   }
 });

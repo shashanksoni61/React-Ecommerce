@@ -1,6 +1,9 @@
 import axios from 'axios';
 import {
   CLEAR_CART_STATE,
+  CLEAR_FETCHED_ORDER_STATE,
+  CLEAR_USER_ORDERS_STATE,
+  CLEAR_USER_STATE,
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
@@ -75,6 +78,9 @@ export const logout = () => dispatch => {
   console.log('logout action working');
   console.log('Clearing All States before logout');
   dispatch({ type: CLEAR_CART_STATE });
+  dispatch({ type: CLEAR_FETCHED_ORDER_STATE });
+  dispatch({ type: CLEAR_USER_ORDERS_STATE });
+  dispatch({ type: CLEAR_USER_STATE });
   dispatch({ type: USER_LOGOUT });
 };
 

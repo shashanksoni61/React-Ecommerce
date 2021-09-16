@@ -25,7 +25,6 @@ export function orderReducer(state = intialState, action) {
     case ORDER_CREATE_REQUEST:
     case ORDER_DETAILS_REQUEST:
       return {
-        ...state,
         loading: true,
       };
 

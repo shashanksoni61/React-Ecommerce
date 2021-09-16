@@ -1,4 +1,5 @@
 import {
+  CLEAR_USER_STATE,
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
@@ -56,6 +57,11 @@ export default function authReducer(state = intialState, action) {
         loading: false,
         user: {},
         error: payload,
+      };
+    case CLEAR_USER_STATE:
+      return {
+        ...state,
+        user: {},
       };
     default:
       return state;

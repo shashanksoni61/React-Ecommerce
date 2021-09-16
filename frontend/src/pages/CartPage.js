@@ -73,7 +73,7 @@ export default function CartPage() {
                         <Col>${item.price}</Col>
                       </Row>
                     </Col>
-                    <Col xs={2} className='text-center'>
+                    <Col xs={3} className='text-center'>
                       <Form.Control
                         as='select'
                         value={item.qty}
