@@ -33,7 +33,7 @@ export default function OrderDetailsPage() {
   useEffect(() => {
     loadScript('https://checkout.razorpay.com/v1/checkout.js');
 
-    if (!order || successPaid) {
+    if (!order || successPaid || id !== order._id) {
       dispatch({ type: ORDER_PAY_RESET });
       dispatch(getOrderByID(id));
       dispatch({ type: CLEAR_CART_STATE });

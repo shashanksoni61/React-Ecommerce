@@ -59,6 +59,33 @@ export default function Header() {
                 </Nav.Link>
               </LinkContainer>
             )}
+            {isAuthenticated && user.isAdmin && (
+              <NavDropdown title='Admin' id='username'>
+                <LinkContainer to='/admin/users'>
+                  <NavDropdown.Item className='nav-link-mobile-spacing'>
+                    <FaUser />
+                    <span>Users</span>
+                  </NavDropdown.Item>
+                </LinkContainer>
+                <LinkContainer to='/admin/products'>
+                  <NavDropdown.Item className='nav-link-mobile-spacing'>
+                    <span>Products</span>
+                  </NavDropdown.Item>
+                </LinkContainer>
+                <LinkContainer to='/admin/orders'>
+                  <NavDropdown.Item className='nav-link-mobile-spacing'>
+                    <span>Orders</span>
+                  </NavDropdown.Item>
+                </LinkContainer>
+                <NavDropdown.Item
+                  onClick={logoutHandler}
+                  className='nav-link-mobile-spacing'
+                >
+                  <FiLogOut />
+                  Logout
+                </NavDropdown.Item>
+              </NavDropdown>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>

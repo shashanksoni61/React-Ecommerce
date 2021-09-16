@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import CheckoutSteps from '../components/layout/CheckoutSteps';
 import { saveShippingAddress } from '../actions/cartAction';
+import { ORDER_CREATE_REQUEST } from '../actions/types';
 
 export default function ShippingPage({ history }) {
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ export default function ShippingPage({ history }) {
     e.preventDefault();
     if (address && pin && city && country) {
       dispatch(saveShippingAddress(formData));
+      dispatch({ type: ORDER_CREATE_REQUEST });
       history.push('/payment');
     }
   };

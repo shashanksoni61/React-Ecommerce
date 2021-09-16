@@ -17,24 +17,38 @@ const intialState = {
   success: false,
   order: null,
   error: null,
+  orderCreated: false,
 };
 
 export function orderReducer(state = intialState, action) {
   const { type, payload } = action;
   switch (type) {
     case ORDER_CREATE_REQUEST:
-    case ORDER_DETAILS_REQUEST:
       return {
         loading: true,
       };
 
+    case ORDER_DETAILS_REQUEST:
+      return {
+        loading: true,
+        order: null,
+        error: null,
+      };
     case ORDER_CREATE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        order: payload,
+        orderCreated: true,
+      };
     case ORDER_DETAILS_SUCCESS:
       return {
         ...state,
         loading: false,
         success: true,
         order: payload,
+        orderCreated: false,
       };
     case ORDER_DETAILS_FAIL:
     case ORDER_CREATE_FAIL:

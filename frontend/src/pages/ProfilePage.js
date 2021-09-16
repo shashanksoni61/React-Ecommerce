@@ -35,11 +35,9 @@ export default function ProfilePage({ history }) {
     if (!isAuthenticated) {
       history.push('/login');
     } else {
-      if (!orders) {
-        dispatch(getUserOrders());
-      }
+      dispatch(getUserOrders());
     }
-  }, [isAuthenticated, history, orders]);
+  }, [dispatch, isAuthenticated, history]);
 
   const { name, email, password, password2 } = formData;
 
@@ -120,6 +118,7 @@ export default function ProfilePage({ history }) {
             </Col>
             <Col md={9} className='mt-sm-2 mt-md-0'>
               <h2>Your Orders</h2>
+              <h5>Total Orders {orders && orders.length}</h5>
               {userOrdersLoading && <Spinner />}
               {userOrdersErrors && (
                 <Message variant='danger'>{userOrdersErrors}</Message>
@@ -146,21 +145,27 @@ export default function ProfilePage({ history }) {
                     {orders &&
                       orders.map(order => (
                         <tr key={order._id}>
-                          <td>{order._id.substring(0, 5)}....</td>
+                          <td>{order._id}</td>
                           <td>
-                            <Moment>{order.createdAt}</Moment>
+                            <Moment format='ddd, MMMM Do YYYY, h:mm A'>
+                              {order.createdAt}
+                            </Moment>
                           </td>
                           <td>$ {order.totalPrice}</td>
                           <td>
                             {order.isPaid ? (
-                              <Moment>{order.paidAt}</Moment>
+                              <Moment format='ddd, MMMM Do YYYY, h:mm A'>
+                                {order.paidAt}
+                              </Moment>
                             ) : (
                               <FaTimesCircle style={{ color: 'red' }} />
                             )}
                           </td>
                           <td>
                             {order.isDelivered ? (
-                              <Moment>{order.deliveredAt}</Moment>
+                              <Moment format='ddd, MMMM Do YYYY, h:mm A'>
+                                {order.deliveredAt}
+                              </Moment>
                             ) : (
                               <FaTimesCircle style={{ color: 'red' }} />
                             )}
