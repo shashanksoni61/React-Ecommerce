@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { register } from '../actions/authAction';
 import Message from '../components/layout/Message';
 
-export default function LoginPage({ history, location: { search } }) {
+export default function RegisterPage({ history, location: { search } }) {
   const dispatch = useDispatch();
 
   const { isAuthenticated, user, error } = useSelector(state => state.auth);

@@ -1,7 +1,8 @@
 import {
-  USER_PROFILE_FAIL,
-  USER_PROFILE_REQUEST,
-  USER_PROFILE_SUCCESS,
+  USER_DETAILS_FAIL,
+  USER_DETAILS_REQUEST,
+  USER_DETAILS_RESET,
+  USER_DETAILS_SUCCESS,
 } from '../actions/types';
 
 const initialState = {
@@ -10,29 +11,31 @@ const initialState = {
   user: {},
 };
 
-export default function userProfileReducer(state = initialState, action) {
+export default function userDetailsReducer(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
-    case USER_PROFILE_REQUEST:
+    case USER_DETAILS_REQUEST:
       return {
         ...state,
         loading: true,
         error: null,
         user: {},
       };
-    case USER_PROFILE_SUCCESS:
+    case USER_DETAILS_SUCCESS:
       return {
         ...state,
         loading: false,
         error: null,
         user: payload,
       };
-    case USER_PROFILE_FAIL:
+    case USER_DETAILS_FAIL:
       return {
         ...state,
         loading: false,
         error: payload,
       };
+    case USER_DETAILS_RESET:
+      return { user: {} };
     default:
       return state;
   }

@@ -49,7 +49,6 @@ export default function ProfilePage({ history }) {
     e.preventDefault();
     if (name && email && password && password2 && password === password2) {
       dispatch(updateUserProfile(name, email, password));
-      console.log(formData);
     }
   };
   return (

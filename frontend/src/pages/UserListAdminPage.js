@@ -8,6 +8,7 @@ import Message from '../components/layout/Message';
 import Spinner from '../components/layout/Spinner';
 
 import { deleteUser, getAllUsers } from '../actions/userListAction';
+import { USER_DETAILS_RESET } from '../actions/types';
 
 export default function UserListPage({ history }) {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ export default function UserListPage({ history }) {
   useEffect(() => {
     if (user && user.isAdmin) {
       dispatch(getAllUsers());
+      dispatch({ type: USER_DETAILS_RESET });
     } else {
       history.push('/login');
     }
@@ -63,7 +65,7 @@ export default function UserListPage({ history }) {
                   )}
                 </td>
                 <td className='d-flex justify-content-around'>
-                  <Link to={`/user/${user._id}/edit`}>
+                  <Link to={`/admin/users/${user._id}/edit`}>
                     <Button variant='light' className='btn-sm'>
                       <FaEdit />
                     </Button>

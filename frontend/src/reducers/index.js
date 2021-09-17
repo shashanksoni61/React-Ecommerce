@@ -5,7 +5,7 @@ import authReducer from './authReducer';
 import { orderReducer, orderPaidReducer } from './orderReducer';
 import userOrdersReducer from './userOrdersReducer';
 import userListReducer, { userDeleteReducer } from './userListReducer';
-// import userProfileReducer from './userProfileReducer';
+import userDetailsReducer from './userDetailsReducer';
 
 export default combineReducers({
   products: productReducer,
@@ -16,5 +16,5 @@ export default combineReducers({
   userOrders: userOrdersReducer,
   userList: userListReducer,
   userDelete: userDeleteReducer,
-  // userProfile: userProfileReducer,
+  userDetails: userDetailsReducer,
 });

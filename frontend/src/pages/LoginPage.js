@@ -13,7 +13,7 @@ export default function LoginPage({ history, location: { search } }) {
     password: '',
   });
   const redirect = search ? search.split('=')[1] : '/';
-  console.log(redirect);
+
   useEffect(() => {
     if (isAuthenticated && user) {
       history.push(redirect);

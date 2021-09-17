@@ -18,7 +18,6 @@ export default function ShippingPage({ history }) {
   );
 
   useEffect(() => {
-    console.log(paymentMethod);
     if (!isAuthenticated) {
       history.push('/login');
     }
@@ -32,7 +31,6 @@ export default function ShippingPage({ history }) {
   const formSubmitHandler = e => {
     e.preventDefault();
     if (paymentMethod) {
-      console.log(paymentMethod);
       dispatch(savePaymentMethod(paymentMethod));
       history.push('/placeorder');
     }

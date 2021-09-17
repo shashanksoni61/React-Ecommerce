@@ -13,7 +13,8 @@ import ShippingPage from './pages/ShippingPage';
 import PaymentPage from './pages/PaymentPage';
 import PlaceOrderPage from './pages/PlaceOrderPage';
 import OrderDetailsPage from './pages/OrderDetailsPage';
-import UserListPage from './pages/UserListPage';
+import UserListAdminPage from './pages/UserListAdminPage';
+import UserEditAdminPage from './pages/UserEditAdminPage';
 
 export default function App() {
   return (
@@ -32,7 +33,12 @@ export default function App() {
             <Route path='/payment' component={PaymentPage} exact />
             <Route path='/placeorder' component={PlaceOrderPage} exact />
             <Route path='/orders/:id' component={OrderDetailsPage} exact />
-            <Route path='/admin/users' component={UserListPage} exact />
+            <Route path='/admin/users' component={UserListAdminPage} exact />
+            <Route
+              path='/admin/users/:id/edit'
+              component={UserEditAdminPage}
+              exact
+            />
           </Switch>
         </Container>
       </main>

@@ -92,7 +92,7 @@ export const updateUserProfile =
       const { user } = getState().auth;
 
       const updatedUserData = { name, email, password };
-      console.log(user.token);
+
       const config = {
         headers: {
           'Content-Type': 'application/json',
@@ -106,8 +106,6 @@ export const updateUserProfile =
         config
       );
 
-      console.log('profile updated with following data');
-      console.log(data);
       dispatch({
         type: USER_PROFILE_SUCCESS,
         payload: data,
