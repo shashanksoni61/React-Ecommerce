@@ -35,8 +35,8 @@ export default function LoginPage({ history, location: { search } }) {
   return (
     <Container>
       <Row className='justify-content-md-center'>
-        {error && <Message variant='danger'>{error}</Message>}
         <Col xs={12} md={6}>
+          {error && <Message variant='danger'>{error}</Message>}
           <h1>Sign In</h1>
           <Form onSubmit={formSubmitHandler}>
             <Form.Group controlId='email'>

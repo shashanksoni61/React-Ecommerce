@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Spinner from '../components/layout/Spinner';
 import Message from '../components/layout/Message';
 
-import { getUserDetails } from '../actions/userListAction';
+import { getUserDetails, updateUserProfile } from '../actions/userListAction';
 
 export default function UserEditAdminPage({ history, match }) {
   const userId = match.params.id;
@@ -26,11 +26,11 @@ export default function UserEditAdminPage({ history, match }) {
       setEmail(user.email);
       setIsAdmin(user.isAdmin);
     }
-  }, [dispatch, user.name, userId]);
+  }, [dispatch, user.name, userId, user.email, user.isAdmin]);
 
   const formSubmitHandler = e => {
     e.preventDefault();
-    console.log(name, email, isAdmin);
+    dispatch(updateUserProfile({ _id: userId, name, email, isAdmin }));
   };
 
   return (

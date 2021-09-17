@@ -63,7 +63,6 @@ export default function Header() {
               <NavDropdown title='Admin' id='username'>
                 <LinkContainer to='/admin/users'>
                   <NavDropdown.Item className='nav-link-mobile-spacing'>
-                    <FaUser />
                     <span>Users</span>
                   </NavDropdown.Item>
                 </LinkContainer>

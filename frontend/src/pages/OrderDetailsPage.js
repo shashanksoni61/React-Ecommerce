@@ -31,7 +31,8 @@ export default function OrderDetailsPage() {
   );
 
   useEffect(() => {
-    loadScript('https://checkout.razorpay.com/v1/checkout.js');
+    if (!window.Razorpay)
+      loadScript('https://checkout.razorpay.com/v1/checkout.js');
 
     if (!order || successPaid || id !== order._id) {
       dispatch({ type: ORDER_PAY_RESET });
@@ -96,6 +97,7 @@ export default function OrderDetailsPage() {
     <Container>
       {loading && <Spinner />}
       {error && <Message variant='danger'>{error}</Message>}
+      {errorPaid && <Message variant='danger'>{errorPaid}</Message>}
       {!loading && !error && (
         <Row>
           <Col md={8}>

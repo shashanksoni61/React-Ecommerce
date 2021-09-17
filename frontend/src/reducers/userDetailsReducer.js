@@ -3,6 +3,9 @@ import {
   USER_DETAILS_REQUEST,
   USER_DETAILS_RESET,
   USER_DETAILS_SUCCESS,
+  USER_UPDATE_REQUEST,
+  USER_UPDATE_SUCCESS,
+  USER_UPDATE_FAIL,
 } from '../actions/types';
 
 const initialState = {
@@ -15,6 +18,7 @@ export default function userDetailsReducer(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
     case USER_DETAILS_REQUEST:
+    case USER_UPDATE_REQUEST:
       return {
         ...state,
         loading: true,
@@ -22,6 +26,7 @@ export default function userDetailsReducer(state = initialState, action) {
         user: {},
       };
     case USER_DETAILS_SUCCESS:
+    case USER_UPDATE_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -29,6 +34,7 @@ export default function userDetailsReducer(state = initialState, action) {
         user: payload,
       };
     case USER_DETAILS_FAIL:
+    case USER_UPDATE_FAIL:
       return {
         ...state,
         loading: false,

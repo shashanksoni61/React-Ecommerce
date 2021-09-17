@@ -39,11 +39,11 @@ export default function RegisterPage({ history, location: { search } }) {
   return (
     <Container>
       <Row className='justify-content-md-center'>
-        {error && <Message variant='danger'>{error}</Message>}
-        {password !== password2 && (
-          <Message variant='danger'>{warning}</Message>
-        )}
         <Col xs={12} md={6}>
+          {error && <Message variant='danger'>{error}</Message>}
+          {password !== password2 && (
+            <Message variant='danger'>{warning}</Message>
+          )}
           <h1>Register Here</h1>
           <Form onSubmit={formSubmitHandler}>
             <Form.Group controlId='name'>
