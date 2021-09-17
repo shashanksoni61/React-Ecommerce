@@ -15,6 +15,7 @@ import PlaceOrderPage from './pages/PlaceOrderPage';
 import OrderDetailsPage from './pages/OrderDetailsPage';
 import UserListAdminPage from './pages/UserListAdminPage';
 import UserEditAdminPage from './pages/UserEditAdminPage';
+import ProductListAdminPage from './pages/ProductListAdminPage';
 
 export default function App() {
   return (
@@ -37,6 +38,11 @@ export default function App() {
             <Route
               path='/admin/users/:id/edit'
               component={UserEditAdminPage}
+              exact
+            />
+            <Route
+              path='/admin/products'
+              component={ProductListAdminPage}
               exact
             />
           </Switch>
