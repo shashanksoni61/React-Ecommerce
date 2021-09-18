@@ -6,6 +6,9 @@ import {
   PRODUCT_DETAILS_SUCCESS,
   PRODUCT_DETAILS_FAIL,
   CLEAR_ALL_STATE,
+  PRODUCT_DELETE_REQUEST,
+  PRODUCT_DELETE_SUCCESS,
+  PRODUCT_DELETE_FAIL,
 } from '../actions/types';
 
 const initialState = {
@@ -64,6 +67,21 @@ export default function productReducer(state = initialState, action) {
         loading: false,
         error: payload,
       };
+    default:
+      return state;
+  }
+}
+
+//For Admin
+export function productDeleteReducer(state = {}, action) {
+  const { type, payload } = action;
+  switch (type) {
+    case PRODUCT_DELETE_REQUEST:
+      return { loading: true };
+    case PRODUCT_DELETE_SUCCESS:
+      return { loading: false, success: true };
+    case PRODUCT_DELETE_FAIL:
+      return { loading: false, error: payload };
     default:
       return state;
   }

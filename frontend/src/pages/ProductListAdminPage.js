@@ -7,13 +7,18 @@ import { FaEdit, FaPlus, FaTrash } from 'react-icons/fa';
 import Message from '../components/layout/Message';
 import Spinner from '../components/layout/Spinner';
 
-import { listProducts } from '../actions/productAction';
+import { deleteProduct, listProducts } from '../actions/productAction';
 
 export default function ProductListAdminPage({ history }) {
   const dispatch = useDispatch();
 
   const { loading, products, error } = useSelector(state => state.products);
   const { user } = useSelector(state => state.auth);
+  const {
+    loading: loadingDelete,
+    success: successDelete,
+    error: errorDelete,
+  } = useSelector(state => state.productDelete);
 
   useEffect(() => {
     if (user && user.isAdmin) {
@@ -21,12 +26,13 @@ export default function ProductListAdminPage({ history }) {
     } else {
       history.push('/login');
     }
-  }, [dispatch, history, user]);
+  }, [dispatch, history, user, successDelete]);
 
   const createProductHandler = product => {};
 
-  const deleteUserHandler = userId => {
+  const deleteProductHandler = prodId => {
     if (window.confirm('Are you sure')) {
+      dispatch(deleteProduct(prodId));
     }
   };
   return (
@@ -42,6 +48,8 @@ export default function ProductListAdminPage({ history }) {
           </Button>
         </Col>
       </Row>
+      {loadingDelete && <Spinner />}
+      {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
       {loading ? (
         <Spinner />
       ) : error ? (
@@ -75,7 +83,7 @@ export default function ProductListAdminPage({ history }) {
                   <Button
                     variant='danger'
                     className='btn-sm'
-                    onClick={() => deleteUserHandler(product._id)}
+                    onClick={() => deleteProductHandler(product._id)}
                   >
                     <FaTrash />
                   </Button>
