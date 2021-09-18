@@ -10,6 +10,10 @@ import {
   PRODUCT_DELETE_REQUEST,
   PRODUCT_DELETE_SUCCESS,
   PRODUCT_DELETE_FAIL,
+  PRODUCT_CREATE_REQUEST,
+  PRODUCT_CREATE_SUCCESS,
+  PRODUCT_CREATE_FAIL,
+  PRODUCT_CREATE_RESET,
 } from './types';
 
 export const listProducts = () => async dispatch => {
@@ -50,7 +54,7 @@ export const productDetails = id => async dispatch => {
   }
 };
 
-// for admin
+// for admin ----->
 export const deleteProduct = id => async (dispatch, getState) => {
   try {
     dispatch({ type: PRODUCT_DELETE_REQUEST });
@@ -72,6 +76,33 @@ export const deleteProduct = id => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: PRODUCT_DELETE_FAIL,
+      payload: error.response.data.message || error.message,
+    });
+  }
+};
+
+export const createProduct = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: PRODUCT_CREATE_REQUEST });
+
+    const { user } = getState().auth;
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        'x-auth-token': `${user.token}`,
+      },
+    };
+
+    const { data } = await axios.post(`/api/products/`, {}, config);
+
+    dispatch({
+      type: PRODUCT_CREATE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_CREATE_FAIL,
       payload: error.response.data.message || error.message,
     });
   }
