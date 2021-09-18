@@ -3,10 +3,13 @@ import { Link } from 'react-router-dom';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 
-import Spinner from '../components/layout/Spinner';
-import Message from '../components/layout/Message';
+import Spinner from '../../components/layout/Spinner';
+import Message from '../../components/layout/Message';
 
-import { getUserDetails, updateUserProfile } from '../actions/userListAction';
+import {
+  getUserDetails,
+  updateUserProfile,
+} from '../../actions/userListAction';
 
 export default function UserEditAdminPage({ history, match }) {
   const userId = match.params.id;

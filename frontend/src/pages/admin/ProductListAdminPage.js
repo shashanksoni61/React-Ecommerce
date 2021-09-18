@@ -4,15 +4,15 @@ import { Table, Button, Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { FaEdit, FaPlus, FaTrash } from 'react-icons/fa';
 
-import Message from '../components/layout/Message';
-import Spinner from '../components/layout/Spinner';
+import Message from '../../components/layout/Message';
+import Spinner from '../../components/layout/Spinner';
 
 import {
   createProduct,
   deleteProduct,
   listProducts,
-} from '../actions/productAction';
-import { PRODUCT_CREATE_RESET } from '../actions/types';
+} from '../../actions/productAction';
+import { PRODUCT_CREATE_RESET } from '../../actions/types';
 
 export default function ProductListAdminPage({ history }) {
   const dispatch = useDispatch();
@@ -35,7 +35,7 @@ export default function ProductListAdminPage({ history }) {
 
   useEffect(() => {
     if (successCreate) {
-      history.push(`/admin/products/${productCreate._id}/edit`);
+      history.push(`/admin/products/${productCreate._id}/edit?type=Add`);
       dispatch({ type: PRODUCT_CREATE_RESET });
     }
     if (user && user.isAdmin) {
@@ -95,7 +95,7 @@ export default function ProductListAdminPage({ history }) {
                 <td>{product.category}</td>
                 <td>{product.brand}</td>
                 <td className='d-flex justify-content-around'>
-                  <Link to={`/admin/product/${product._id}/edit`}>
+                  <Link to={`/admin/products/${product._id}/edit`}>
                     <Button variant='light' className='btn-sm'>
                       <FaEdit />
                     </Button>

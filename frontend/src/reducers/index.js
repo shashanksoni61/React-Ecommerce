@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import productReducer, {
   productCreateReducer,
   productDeleteReducer,
+  productUpdateReducer,
 } from './productReducer';
 import cartReducer from './cartReducer';
 import authReducer from './authReducer';
@@ -22,6 +23,7 @@ export default combineReducers({
   userDetails: userDetailsReducer,
   productCreate: productCreateReducer,
   productDelete: productDeleteReducer,
+  productUpdate: productUpdateReducer,
 });
 
 // after userOrders state, all states are for admin

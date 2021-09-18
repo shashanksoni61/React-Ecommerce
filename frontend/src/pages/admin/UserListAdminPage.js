@@ -4,11 +4,11 @@ import { Table, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { FaCheck, FaEdit, FaTimes, FaTrash } from 'react-icons/fa';
 
-import Message from '../components/layout/Message';
-import Spinner from '../components/layout/Spinner';
+import Message from '../../components/layout/Message';
+import Spinner from '../../components/layout/Spinner';
 
-import { deleteUser, getAllUsers } from '../actions/userListAction';
-import { USER_DETAILS_RESET } from '../actions/types';
+import { deleteUser, getAllUsers } from '../../actions/userListAction';
+import { USER_DETAILS_RESET } from '../../actions/types';
 
 export default function UserListPage({ history }) {
   const dispatch = useDispatch();

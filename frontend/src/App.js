@@ -13,9 +13,10 @@ import ShippingPage from './pages/ShippingPage';
 import PaymentPage from './pages/PaymentPage';
 import PlaceOrderPage from './pages/PlaceOrderPage';
 import OrderDetailsPage from './pages/OrderDetailsPage';
-import UserListAdminPage from './pages/UserListAdminPage';
-import UserEditAdminPage from './pages/UserEditAdminPage';
-import ProductListAdminPage from './pages/ProductListAdminPage';
+import UserListAdminPage from './pages/admin/UserListAdminPage';
+import UserEditAdminPage from './pages/admin/UserEditAdminPage';
+import ProductListAdminPage from './pages/admin/ProductListAdminPage';
+import ProductEditAdminPage from './pages/admin/ProductEditAdminPage';
 
 export default function App() {
   return (
@@ -43,6 +44,11 @@ export default function App() {
             <Route
               path='/admin/products'
               component={ProductListAdminPage}
+              exact
+            />
+            <Route
+              path='/admin/products/:id/edit'
+              component={ProductEditAdminPage}
               exact
             />
           </Switch>

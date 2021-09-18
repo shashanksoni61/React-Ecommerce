@@ -51,9 +51,7 @@ export default function Rating({ rating, numReviews }) {
           )}
         </span>
       </div>
-      <span className='rating-numbers'>
-        {numReviews && numReviews + ' reviews'}
-      </span>
+      <span className='rating-numbers'>{numReviews + ' reviews'}</span>
     </div>
   );
 }
