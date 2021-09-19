@@ -28,7 +28,7 @@ export default function UserEditAdminPage({ history, match }) {
       setName(user.name);
       setEmail(user.email);
       setIsAdmin(user.isAdmin);
-    }
+    } // eslint-disable-next-line
   }, [dispatch, user.name, userId, user.email, user.isAdmin]);
 
   const formSubmitHandler = e => {

@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Form, Container, Row, Col, Button } from 'react-bootstrap';
@@ -33,6 +34,7 @@ export default function ProductEditAdminPage({
   const [category, setCategory] = useState('');
   const [countInStock, setCountInStock] = useState(0);
   const [description, setDescription] = useState('');
+  const [uploading, setUploading] = useState(false);
 
   const pageType = search ? search.split('=')[1] : 'Update';
 
@@ -56,7 +58,7 @@ export default function ProductEditAdminPage({
       }
     } else {
       history.push('/login');
-    }
+    } // eslint-disable-next-line
   }, [dispatch, history, product.name, prodId, successUpdate]);
 
   const formSubmitHandler = () => {
@@ -74,7 +76,28 @@ export default function ProductEditAdminPage({
     );
   };
 
-  const uploadFileHandler = () => {};
+  const uploadFileHandler = async e => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append('image', file);
+    setUploading(true);
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'x-auth-token': `${user.token}`,
+        },
+      };
+      console.log('ready to req');
+      const { data } = await axios.post('/api/upload', formData, config);
+      setImage(data);
+      console.log('data from servre', data);
+      setUploading(false);
+    } catch (error) {
+      console.log(error.message);
+      setUploading(false);
+    }
+  };
 
   return (
     <Container>
@@ -124,6 +147,7 @@ export default function ProductEditAdminPage({
                   custom
                   onChange={uploadFileHandler}
                 ></Form.File>
+                {uploading && <Spinner />}
               </Form.Group>
 
               <Form.Group controlId='brand'>

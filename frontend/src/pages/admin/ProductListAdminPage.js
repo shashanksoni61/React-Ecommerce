@@ -27,7 +27,6 @@ export default function ProductListAdminPage({ history }) {
   } = useSelector(state => state.productDelete);
 
   const {
-    loading: loadingCreate,
     success: successCreate,
     product: productCreate,
     error: errorCreate,
@@ -43,6 +42,7 @@ export default function ProductListAdminPage({ history }) {
     } else {
       history.push('/login');
     }
+    // eslint-disable-next-line
   }, [dispatch, history, user, successDelete, successCreate]);
 
   const createProductHandler = () => {
