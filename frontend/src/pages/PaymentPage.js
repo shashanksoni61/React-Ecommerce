@@ -53,7 +53,7 @@ export default function ShippingPage({ history }) {
                 name='paymentMethod'
                 onChange={() => setPaymentMethod('Online-Payment')}
               />
-              <Form.Check
+              {/* <Form.Check
                 id='CoD'
                 type='radio'
                 label='Cash On Delivery'
@@ -61,7 +61,7 @@ export default function ShippingPage({ history }) {
                 checked={paymentMethod === 'CoD'}
                 name='paymentMethod'
                 onChange={() => setPaymentMethod('CoD')}
-              />
+              /> */}
             </Form.Group>
             <Button type='submit' varient='primary' className='mt-3'>
               Continue

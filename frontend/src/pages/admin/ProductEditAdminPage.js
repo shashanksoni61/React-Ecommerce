@@ -88,14 +88,14 @@ export default function ProductEditAdminPage({
           'x-auth-token': `${user.token}`,
         },
       };
-      console.log('ready to req');
+
       const { data } = await axios.post('/api/upload', formData, config);
       setImage(data);
-      console.log('data from servre', data);
       setUploading(false);
     } catch (error) {
       console.log(error.message);
       setUploading(false);
+      setImage('');
     }
   };
 

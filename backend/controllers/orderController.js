@@ -54,7 +54,6 @@ export const addOrder = AsyncHandler(async (req, res) => {
 // Access   Private Only For Logged User
 
 export const getOrderByID = AsyncHandler(async (req, res) => {
-  const user = await User.findById(req.user);
   const order = await Order.findById(req.params.id).populate(
     'user',
     'id name email'
@@ -64,18 +63,26 @@ export const getOrderByID = AsyncHandler(async (req, res) => {
     res.status(404);
     throw new Error('Order Not Found');
   } else {
-    const loggedUserId = String(user._id);
-    const orderUserId = String(order.user._id);
-    console.log(loggedUserId);
-    console.log(orderUserId);
-    if (loggedUserId !== orderUserId) {
-      res.status(401);
-      throw new Error('Unauthorized Access');
-    } else {
-      res.status(200).json(order);
-    }
+    console.log('here');
+    res.status(200).json(order);
   }
 });
+// if (!order) {
+//   res.status(404);
+//   throw new Error('Order Not Found');
+// } else {
+//   const loggedUserId = String(user._id);
+//   const orderUserId = String(order.user._id);
+//   console.log(loggedUserId);
+//   console.log(orderUserId);
+//   if (user.isAdmin || loggedUserId === orderUserId) {
+//     console.log('here');
+//     res.status(200).json(order);
+//   } else {
+//     res.status(401);
+//     throw new Error('Unauthorized Access');
+//   }
+// }
 
 // Desc     Generate Razorpay order id with amount for payment
 // Route    POST /api/orders/:id/pay
@@ -176,6 +183,20 @@ export const updateOrderToPaid = AsyncHandler(async (req, res) => {
 // Access   Private Only For Logged User
 export const getUserOrders = AsyncHandler(async (req, res) => {
   const orders = await Order.find({ user: req.user });
+
+  if (orders) {
+    res.status(200).json(orders);
+  } else {
+    res.status(404);
+    throw new Error('No Orders Found');
+  }
+});
+
+// Desc     Get Orders of All User
+// Route    GET /api/orders/
+// Access   Private Only For admin
+export const getAllOrders = AsyncHandler(async (req, res) => {
+  const orders = await Order.find().populate('user', 'id name email');
 
   if (orders) {
     res.status(200).json(orders);

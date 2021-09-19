@@ -6,7 +6,11 @@ import productReducer, {
 } from './productReducer';
 import cartReducer from './cartReducer';
 import authReducer from './authReducer';
-import { orderReducer, orderPaidReducer } from './orderReducer';
+import {
+  orderReducer,
+  orderPaidReducer,
+  orderListReducer,
+} from './orderReducer';
 import userOrdersReducer from './userOrdersReducer';
 import userListReducer, { userDeleteReducer } from './userListReducer';
 import userDetailsReducer from './userDetailsReducer';
@@ -24,6 +28,7 @@ export default combineReducers({
   productCreate: productCreateReducer,
   productDelete: productDeleteReducer,
   productUpdate: productUpdateReducer,
+  orderList: orderListReducer,
 });
 
 // after userOrders state, all states are for admin

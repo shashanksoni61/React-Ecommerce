@@ -42,56 +42,62 @@ export default function OrderDetailsPage() {
   }, [dispatch, id, order, successPaid]);
 
   const displayRazorPay = async () => {
-    const { data: RAZORPAY_KEY_ID } = await axios.get('/api/config/razorpay');
+    try {
+      const { data: RAZORPAY_KEY_ID } = await axios.get('/api/config/razorpay');
 
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        'x-auth-token': `${user.token}`,
-      },
-    };
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          'x-auth-token': `${user.token}`,
+        },
+      };
 
-    const { data: orderPayData } = await axios.get(
-      `/api/orders/${id}/razorpay`,
-      config
-    );
+      const { data: orderPayData } = await axios.get(
+        `/api/orders/${id}/razorpay`,
+        config
+      );
 
-    const options = {
-      key: RAZORPAY_KEY_ID,
-      currency: orderPayData.currency,
-      amount: orderPayData.amount.toString(),
-      order_id: orderPayData.id,
-      name: 'Tech Shop',
-      description: `At Your Service`,
-      image: '/logo192.png',
-      handler: async function (response) {
-        const paymentResult = {
-          orderCreationId: orderPayData.id,
-          razorpayPaymentId: response.razorpay_payment_id,
-          razorpayOrderId: response.razorpay_order_id,
-          razorpaySignature: response.razorpay_signature,
-        };
+      const options = {
+        key: RAZORPAY_KEY_ID,
+        currency: orderPayData.currency,
+        amount: orderPayData.amount.toString(),
+        order_id: orderPayData.id,
+        name: 'Tech Shop',
+        description: `At Your Service`,
+        image: '/logo192.png',
+        handler: async function (response) {
+          const paymentResult = {
+            orderCreationId: orderPayData.id,
+            razorpayPaymentId: response.razorpay_payment_id,
+            razorpayOrderId: response.razorpay_order_id,
+            razorpaySignature: response.razorpay_signature,
+          };
 
-        const result = await axios.post(
-          `/api/orders/${id}/payment_varify`,
-          paymentResult,
-          config
-        );
+          const result = await axios.post(
+            `/api/orders/${id}/payment_varify`,
+            paymentResult,
+            config
+          );
 
-        if (result.status === 200) {
-          dispatch(payOrder(id, result.data));
-        }
-      },
-      prefill: {
-        name: user.name,
-        email: user.email,
-        phone_number: '9899999999',
-      },
-    };
+          if (result.status === 200) {
+            dispatch(payOrder(id, result.data));
+          }
+        },
+        prefill: {
+          name: user.name,
+          email: user.email,
+          phone_number: '9899999999',
+        },
+      };
 
-    const paymentObject = new window.Razorpay(options);
-    paymentObject.open();
+      const paymentObject = new window.Razorpay(options);
+      paymentObject.open();
+    } catch (error) {
+      console.log(error.message);
+    }
   };
+
+  const deliverHandler = () => {};
 
   return (
     <Container>
@@ -108,6 +114,9 @@ export default function OrderDetailsPage() {
                 <p>
                   <strong>Name : </strong>
                   {order.user.name}
+                  <br />
+                  <strong>Email : </strong>
+                  {order.user.email}
                   <br />
                   <strong>Mobile No : </strong>
                   {order.shippingAddress.mobile}
@@ -150,8 +159,8 @@ export default function OrderDetailsPage() {
                   <ListGroup variant='flush'>
                     {order.orderItems.map((item, index) => (
                       <ListGroup.Item key={index}>
-                        <Row className=''>
-                          <Col xs={4} sm={2} md={1}>
+                        <Row className='align-items-center'>
+                          <Col xs={4} sm={2} md={2}>
                             <Link to={`/product/${item.product}`}>
                               <Image
                                 src={item.image}
@@ -164,7 +173,7 @@ export default function OrderDetailsPage() {
 
                           <Col className='d-sm-none '>
                             <Link to={`/product/${item.product}`}>
-                              {item.name}
+                              <strong> {item.name}</strong>
                             </Link>
                             <strong className='d-block'>
                               {item.qty} x ${item.price} = $
@@ -174,7 +183,7 @@ export default function OrderDetailsPage() {
 
                           <Col className='d-none d-md-flex'>
                             <Link to={`/product/${item.product}`}>
-                              {item.name}
+                              <strong> {item.name}</strong>
                             </Link>
                           </Col>
                           <Col className='d-none d-md-flex'>
@@ -231,6 +240,17 @@ export default function OrderDetailsPage() {
                       onClick={displayRazorPay}
                     >
                       Pay Now
+                    </Button>
+                  </ListGroup.Item>
+                )}
+                {user && user.isAdmin && order.isPaid && !order.isDelivered && (
+                  <ListGroup.Item>
+                    <Button
+                      type='button'
+                      className='btn btn-block'
+                      onClick={deliverHandler}
+                    >
+                      Mark As Delivered
                     </Button>
                   </ListGroup.Item>
                 )}

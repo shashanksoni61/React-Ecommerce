@@ -32,7 +32,10 @@ export default function ProductPage({ history }) {
     // history.push(`/cart/${id}?qty=${quantity}`);
     dispatch(addToCart(id, Number(quantity)));
     setItemAdded(true);
-    setTimeout(() => setItemAdded(false), 2000);
+    setTimeout(() => {
+      setItemAdded(false);
+      history.push('/');
+    }, 2000);
   };
 
   const {

@@ -23,11 +23,10 @@ app.get('/', (req, res) => {
 app.use('/api/products', productRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api/orders', orderRoutes);
-app.use('/api/upload', uploadRoutes);
-
 app.get('/api/config/razorpay', (req, res) =>
   res.send(process.env.RAZORPAY_KEY_ID)
 );
+app.use('/api/upload', uploadRoutes);
 
 const __dirname = path.resolve();
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));

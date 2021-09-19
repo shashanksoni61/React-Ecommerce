@@ -17,6 +17,7 @@ import UserListAdminPage from './pages/admin/UserListAdminPage';
 import UserEditAdminPage from './pages/admin/UserEditAdminPage';
 import ProductListAdminPage from './pages/admin/ProductListAdminPage';
 import ProductEditAdminPage from './pages/admin/ProductEditAdminPage';
+import OrderListAdminPage from './pages/admin/OrderListAdminPage';
 
 export default function App() {
   return (
@@ -35,6 +36,7 @@ export default function App() {
             <Route path='/payment' component={PaymentPage} exact />
             <Route path='/placeorder' component={PlaceOrderPage} exact />
             <Route path='/orders/:id' component={OrderDetailsPage} exact />
+            <Route path='/admin/orders' component={OrderListAdminPage} exact />
             <Route path='/admin/users' component={UserListAdminPage} exact />
             <Route
               path='/admin/users/:id/edit'

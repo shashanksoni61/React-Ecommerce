@@ -10,6 +10,9 @@ import {
   ORDER_PAY_FAIL,
   ORDER_PAY_RESET,
   CLEAR_FETCHED_ORDER_STATE,
+  ORDER_LIST_REQUEST,
+  ORDER_LIST_SUCCESS,
+  ORDER_LIST_FAIL,
 } from '../actions/types';
 
 const intialState = {
@@ -84,6 +87,30 @@ export function orderPaidReducer(state = {}, action) {
       };
     case ORDER_PAY_RESET:
       return {};
+    default:
+      return state;
+  }
+}
+
+const orderListState = { orders: [] };
+
+export function orderListReducer(state = orderListState, action) {
+  const { type, payload } = action;
+  switch (type) {
+    case ORDER_LIST_REQUEST:
+      return {
+        loading: true,
+      };
+    case ORDER_LIST_SUCCESS:
+      return {
+        loading: false,
+        orders: payload,
+      };
+    case ORDER_LIST_FAIL:
+      return {
+        loading: false,
+        error: payload,
+      };
     default:
       return state;
   }

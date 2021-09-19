@@ -61,3 +61,10 @@ a {
 .btn-block {
   width: 100%;
 }
+
+@media only screen and (min-width: 575.98px) {
+  .card-img {
+    height: 278px;
+    object-fit: cover;
+  }
+}

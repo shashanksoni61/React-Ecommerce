@@ -6,11 +6,13 @@ import {
   updateOrderToPaid,
   validatePayment,
   getUserOrders,
+  getAllOrders,
 } from '../controllers/orderController.js';
-import auth from '../middleware/authMiddleware.js';
+import auth, { admin } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
+router.get('/', auth, admin, getAllOrders);
 router.post('/', auth, addOrder);
 router.get('/myorders', auth, getUserOrders);
 router.get('/:id', auth, getOrderByID);
