@@ -10,6 +10,7 @@ import {
   orderReducer,
   orderPaidReducer,
   orderListReducer,
+  orderDeliverReducer,
 } from './orderReducer';
 import userOrdersReducer from './userOrdersReducer';
 import userListReducer, { userDeleteReducer } from './userListReducer';
@@ -29,6 +30,7 @@ export default combineReducers({
   productDelete: productDeleteReducer,
   productUpdate: productUpdateReducer,
   orderList: orderListReducer,
+  orderDelivered: orderDeliverReducer,
 });
 
 // after userOrders state, all states are for admin

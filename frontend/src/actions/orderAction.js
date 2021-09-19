@@ -12,6 +12,9 @@ import {
   ORDER_LIST_FAIL,
   ORDER_LIST_SUCCESS,
   ORDER_LIST_REQUEST,
+  ORDER_DELIVER_REQUEST,
+  ORDER_DELIVER_SUCCESS,
+  ORDER_DELIVER_FAIL,
 } from './types';
 
 export const createORder = order => async (dispatch, getState) => {
@@ -83,7 +86,7 @@ export const payOrder =
         },
       };
 
-      const { data } = await axios.post(
+      const { data } = await axios.put(
         `/api/orders/${orderId}/pay`,
         paymentResult,
         config
@@ -125,6 +128,38 @@ export const listOrders = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: ORDER_LIST_FAIL,
+      payload: (error.respose && error.response.data.message) || error.message,
+    });
+  }
+};
+
+export const deliverOrder = order => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: ORDER_DELIVER_REQUEST,
+    });
+
+    const { user } = getState().auth;
+
+    const config = {
+      headers: {
+        'x-auth-token': `${user.token}`,
+      },
+    };
+
+    const { data } = await axios.put(
+      `/api/orders/${order._id}/deliver`,
+      {},
+      config
+    );
+
+    dispatch({
+      type: ORDER_DELIVER_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ORDER_DELIVER_FAIL,
       payload: (error.respose && error.response.data.message) || error.message,
     });
   }

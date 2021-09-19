@@ -7,6 +7,7 @@ import {
   validatePayment,
   getUserOrders,
   getAllOrders,
+  updateOrderToDeliverd,
 } from '../controllers/orderController.js';
 import auth, { admin } from '../middleware/authMiddleware.js';
 
@@ -18,6 +19,7 @@ router.get('/myorders', auth, getUserOrders);
 router.get('/:id', auth, getOrderByID);
 router.get('/:id/razorpay', auth, generateRazorpayOrderId);
 router.post('/:id/payment_varify', auth, validatePayment);
-router.post('/:id/pay', auth, updateOrderToPaid);
+router.put('/:id/pay', auth, updateOrderToPaid);
+router.put('/:id/deliver', auth, admin, updateOrderToDeliverd);
 
 export default router;

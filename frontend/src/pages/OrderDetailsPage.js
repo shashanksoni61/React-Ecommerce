@@ -17,11 +17,15 @@ import Moment from 'react-moment';
 import Message from '../components/layout/Message';
 import Spinner from '../components/layout/Spinner';
 
-import { getOrderByID, payOrder } from '../actions/orderAction';
-import { CLEAR_CART_STATE, ORDER_PAY_RESET } from '../actions/types';
+import { deliverOrder, getOrderByID, payOrder } from '../actions/orderAction';
+import {
+  CLEAR_CART_STATE,
+  ORDER_DELIVER_RESET,
+  ORDER_PAY_RESET,
+} from '../actions/types';
 import { loadScript } from '../utils';
 
-export default function OrderDetailsPage() {
+export default function OrderDetailsPage({ history }) {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { user } = useSelector(state => state.auth);
@@ -29,17 +33,27 @@ export default function OrderDetailsPage() {
   const { success: successPaid, error: errorPaid } = useSelector(
     state => state.orderPaid
   );
+  const {
+    loading: loadingDelivered,
+    success: successDelivered,
+    error: errorDelivered,
+  } = useSelector(state => state.orderDelivered);
 
   useEffect(() => {
+    if (!user.name) {
+      history.push('/login');
+    }
+
     if (!window.Razorpay)
       loadScript('https://checkout.razorpay.com/v1/checkout.js');
 
-    if (!order || successPaid || id !== order._id) {
+    if (!order || successPaid || id !== order._id || successDelivered) {
       dispatch({ type: ORDER_PAY_RESET });
+      dispatch({ type: ORDER_DELIVER_RESET });
       dispatch(getOrderByID(id));
       dispatch({ type: CLEAR_CART_STATE });
     }
-  }, [dispatch, id, order, successPaid]);
+  }, [dispatch, history, user.name, id, order, successPaid, successDelivered]);
 
   const displayRazorPay = async () => {
     try {
@@ -97,13 +111,17 @@ export default function OrderDetailsPage() {
     }
   };
 
-  const deliverHandler = () => {};
+  const deliverHandler = () => {
+    dispatch(deliverOrder(order));
+  };
 
   return (
     <Container>
       {loading && <Spinner />}
+      {loadingDelivered && <Spinner />}
       {error && <Message variant='danger'>{error}</Message>}
       {errorPaid && <Message variant='danger'>{errorPaid}</Message>}
+      {errorDelivered && <Message variant='danger'>{errorDelivered}</Message>}
       {!loading && !error && (
         <Row>
           <Col md={8}>
@@ -127,7 +145,10 @@ export default function OrderDetailsPage() {
                 </p>
                 {order.isDelivered ? (
                   <Message variant='success'>
-                    Delivered on {order.deliveredAt}
+                    Delivered on{' '}
+                    <Moment format='ddd, MMMM Do YYYY'>
+                      {order.deliveredAt}
+                    </Moment>
                   </Message>
                 ) : (
                   <Message variant='danger'>Not Delivered</Message>

@@ -146,14 +146,14 @@ export default function ProfilePage({ history }) {
                         <tr key={order._id}>
                           <td>{order._id}</td>
                           <td>
-                            <Moment format='ddd, MMMM Do YYYY, h:mm A'>
+                            <Moment format='DD-MM-YYYY'>
                               {order.createdAt}
                             </Moment>
                           </td>
                           <td>$ {order.totalPrice}</td>
                           <td>
                             {order.isPaid ? (
-                              <Moment format='ddd, MMMM Do YYYY, h:mm A'>
+                              <Moment format='DD-MM-YYYY'>
                                 {order.paidAt}
                               </Moment>
                             ) : (
