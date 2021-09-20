@@ -1,9 +1,12 @@
 import React from 'react';
+import { Route } from 'react-router-dom';
 import { FaShoppingCart, FaUser } from 'react-icons/fa';
 import { FiLogOut } from 'react-icons/fi';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
+
+import Search from '../Search/Search';
 
 import { logout } from '../../actions/authAction';
 import { useHistory } from 'react-router';
@@ -26,8 +29,8 @@ export default function Header() {
         </LinkContainer>
 
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
-
         <Navbar.Collapse id='basic-navbar-nav'>
+          <Route render={({ history }) => <Search history={history} />} />
           <Nav className='ml-auto'>
             <LinkContainer to='/cart'>
               <Nav.Link className='nav-link-mobile-spacing'>

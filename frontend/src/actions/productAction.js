@@ -21,22 +21,24 @@ import {
   PRODUCT_CREATE_REVIEW_FAIL,
 } from './types';
 
-export const listProducts = () => async dispatch => {
-  try {
-    dispatch({ type: CLEAR_ALL_STATE });
-    dispatch({ type: PRODUCT_LIST_REQUEST });
-    const { data } = await axios.get('/api/products');
-    dispatch({
-      type: PRODUCT_LIST_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: PRODUCT_LIST_FAIL,
-      payload: error.response.data.message || error.message,
-    });
-  }
-};
+export const listProducts =
+  (searchTerm = '') =>
+  async dispatch => {
+    try {
+      dispatch({ type: CLEAR_ALL_STATE });
+      dispatch({ type: PRODUCT_LIST_REQUEST });
+      const { data } = await axios.get(`/api/products?search=${searchTerm}`);
+      dispatch({
+        type: PRODUCT_LIST_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: PRODUCT_LIST_FAIL,
+        payload: error.response.data.message || error.message,
+      });
+    }
+  };
 
 export const productDetails = id => async dispatch => {
   try {

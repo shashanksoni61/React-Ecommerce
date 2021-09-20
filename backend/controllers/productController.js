@@ -6,7 +6,15 @@ import User from '../models/User.js';
 // Route    GET /api/products
 // Access   Public
 const getProducts = asyncHandler(async (req, res) => {
-  const products = await Product.find();
+  const searchText = req.query.search
+    ? {
+        name: {
+          $regex: req.query.search,
+          $options: 'i',
+        },
+      }
+    : {};
+  const products = await Product.find({ ...searchText });
   res.status(200).json(products);
 });
 

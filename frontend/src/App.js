@@ -27,6 +27,7 @@ export default function App() {
         <Container>
           <Switch>
             <Route path='/' component={HomePage} exact />
+            <Route path='/search/:search' component={HomePage} exact />
             <Route path='/product/:id' component={ProductPage} exact />
             <Route path='/cart/:id?' component={CartPage} exact />
             <Route path='/login' component={LoginPage} exact />
