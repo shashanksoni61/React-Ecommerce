@@ -1,0 +1,62 @@
+
+# TechShop React-E-commerce 
+
+eCommerce platform built with the MERN stack & Redux. 
+Users can make purchases, review products, rate them.
+Payment gateway has been implemented using Razorpay API.
+Admin users can Add products, edit them and delete them , Admin can also mark paid orders to delivered , provide admin rights to regular users.
+
+
+
+## Features
+
+- Shopping Cart
+- Product Search Feature
+- Admin product management
+- Admin user management
+- Mark orders as delivered option
+- Checkout process (shipping, payment method, etc)
+
+  
+## Live Demo  
+## Demo
+
+App us hosted on Heroku 
+
+https://techshop-shashank.herokuapp.com/
+
+### Test User Credentials
+>  login - naruto@example.com
+>  password - 123456
+
+### Admin User Credentials
+>   login - shashank@admin.com
+>   password - 123456
+
+
+## Environment Variables
+
+To run this project, you will need to add the following environment variables to your .env file
+
+`NODE_ENV`
+
+`PORT` = 5000
+
+`MONGO_URI`
+
+`JWT_SECRET`
+
+`RAZORPAY_KEY_ID`
+
+`RAZORPAY_KEY_SECRET` 
+
+  
+## Tech Stack
+
+**Client:** React, Redux, Bootstrap, 
+
+**Server:** Node, Express, Razorpay,
+
+
+
+  
