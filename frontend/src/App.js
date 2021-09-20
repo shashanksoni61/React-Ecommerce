@@ -18,6 +18,7 @@ import UserEditAdminPage from './pages/admin/UserEditAdminPage';
 import ProductListAdminPage from './pages/admin/ProductListAdminPage';
 import ProductEditAdminPage from './pages/admin/ProductEditAdminPage';
 import OrderListAdminPage from './pages/admin/OrderListAdminPage';
+import NotFound from './pages/NotFound';
 
 export default function App() {
   return (
@@ -54,6 +55,7 @@ export default function App() {
               component={ProductEditAdminPage}
               exact
             />
+            <Route path='*' component={NotFound} />
           </Switch>
         </Container>
       </main>
