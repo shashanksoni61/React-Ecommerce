@@ -19,11 +19,12 @@ Admin users can Add products, edit them and delete them , Admin can also mark pa
 
   
 ## Live Demo  
-## Demo
 
 App us hosted on Heroku 
 
 https://techshop-shashank.herokuapp.com/
+
+#### Due to heroku free terms, if an app receives no web traffic in a 30-minute period, it will sleep. Therefore, during the first launch, the application may take longer to load than usual, approximately 15 - 20 seconds. So please be patient and wait for the app to launch. Subsequent launches will be relatively fast.
 
 ### Test User Credentials
 >  login - naruto@example.com
