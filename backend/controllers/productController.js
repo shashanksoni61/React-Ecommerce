@@ -8,12 +8,16 @@ import User from '../models/User.js';
 const getProducts = asyncHandler(async (req, res) => {
   const searchText = req.query.search
     ? {
-        name: {
-          $regex: req.query.search,
-          $options: 'i',
-        },
+        $or: [
+          { name: { $regex: req.query.search, $options: 'i' } },
+          { brand: { $regex: req.query.search, $options: 'i' } },
+        ],
       }
     : {};
+
+  // {$or :[{name :{ $regex: 'ip', $options:'i'}} , {brand: { $regex :'ama' , $options:'i'} }]}
+  // name: { $regex: req.query.keyword,$options: 'i',}
+
   const products = await Product.find({ ...searchText });
   res.status(200).json(products);
 });

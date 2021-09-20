@@ -19,7 +19,7 @@ export default function Search({ history }) {
         type='text'
         name='search'
         onChange={e => setSearchText(e.target.value)}
-        placeholder='Seach Products...'
+        placeholder='Seach Products By Name Or Brand...'
         className='mr-sm-2 ml-sm-5'
       />
 
