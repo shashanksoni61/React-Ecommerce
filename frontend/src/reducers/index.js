@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import productReducer, {
   productCreateReducer,
   productDeleteReducer,
+  productReviewReducer,
   productUpdateReducer,
 } from './productReducer';
 import cartReducer from './cartReducer';
@@ -29,6 +30,7 @@ export default combineReducers({
   productCreate: productCreateReducer,
   productDelete: productDeleteReducer,
   productUpdate: productUpdateReducer,
+  productReview: productReviewReducer,
   orderList: orderListReducer,
   orderDelivered: orderDeliverReducer,
 });
