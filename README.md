@@ -24,6 +24,13 @@ App us hosted on Heroku
 
 https://techshop-shashank.herokuapp.com/
 
+| Card Network | Card Number         | CVV        | Expiry Date     |
+|--------------|---------------------|------------|-----------------|
+| MasterCard   | 5267 3181 8797 5449 | Any Number | Any future Date |
+| Visa         | 4111 1111 1111 1111 | Any Number | Any future Date |
+|              |                     |            |                 |
+| UPI          | success@razorpay    |            |                 |
+
 #### Due to heroku free terms, if an app receives no web traffic in a 30-minute period, it will sleep. Therefore, during the first launch, the application may take longer to load than usual, approximately 15 - 20 seconds. So please be patient and wait for the app to launch. Subsequent launches will be relatively fast.
 
 ### Test User Credentials
