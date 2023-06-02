@@ -1,4 +1,5 @@
-import axios from 'axios';
+import { axiosInstance as axios } from '../utils/apiClient';
+
 import {
   USER_PROFILE_FAIL,
   USER_PROFILE_REQUEST,

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { axiosInstance as axios } from '../utils/apiClient';
 import {
   CLEAR_CART_STATE,
   CLEAR_FETCHED_ORDER_STATE,

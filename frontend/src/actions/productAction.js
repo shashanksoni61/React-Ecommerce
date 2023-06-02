@@ -1,4 +1,5 @@
-import axios from 'axios';
+import { axiosInstance as axios } from '../utils/apiClient';
+
 import {
   CLEAR_ALL_STATE,
   PRODUCT_LIST_REQUEST,
@@ -33,6 +34,7 @@ export const listProducts =
         payload: data,
       });
     } catch (error) {
+      console.log(error)
       dispatch({
         type: PRODUCT_LIST_FAIL,
         payload: error.response.data.message || error.message,

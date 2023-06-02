@@ -1,4 +1,5 @@
-import axios from 'axios';
+import { axiosInstance as axios } from '../utils/apiClient';
+
 import {
   ORDER_CREATE_FAIL,
   ORDER_CREATE_REQUEST,

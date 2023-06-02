@@ -1,4 +1,5 @@
-import axios from 'axios';
+import { axiosInstance as axios } from '../utils/apiClient';
+
 import {
   CART_ADD_ITEM,
   CART_PAYMENT_METHOD,
