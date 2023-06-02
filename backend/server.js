@@ -1,7 +1,8 @@
-import express from 'express';
-import dotenv from 'dotenv';
 import path from 'path';
+import dotenv from 'dotenv';
 import morgan from 'morgan';
+import cors from 'cors';
+import express from 'express';
 import connectDB from './config/db.js';
 import productRoutes from './routes/productRoutes.js';
 import usersRoutes from './routes/usersRoutes.js';
@@ -14,6 +15,7 @@ const app = express();
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
+app.use(cors());
 
 app.use(express.json());
 
@@ -21,7 +23,7 @@ dotenv.config();
 
 connectDB();
 
-if (process.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development') {
   app.get('/', (req, res) => {
     res.send('api is running at 5000');
   });
